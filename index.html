@@ -1,1 +1,89 @@
-h
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#111318" />
+  <meta name="description" content="vsSCRIPT — lightweight mobile code editor" />
+  <title>vsSCRIPT — Code Editor</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <button class="icon-button mobile-only" id="sidebarToggle" aria-label="Buka file explorer" title="Explorer">☰</button>
+      <a class="brand" href="#" aria-label="vsSCRIPT home">
+        <span class="brand-mark">VS</span><span class="brand-name">vsSCRIPT</span>
+      </a>
+      <div class="topbar-center"><span class="project-dot"></span><span>my-project</span><span class="crumb-separator">/</span><span class="muted">workspace</span></div>
+      <div class="topbar-actions">
+        <button class="icon-button" id="searchToggle" aria-label="Search" title="Search">⌕</button>
+        <button class="icon-button" id="commandButton" aria-label="Command palette" title="Command palette">⌘</button>
+        <button class="run-button" id="runButton"><span>▶</span><span class="run-label">Run</span></button>
+        <button class="icon-button" id="moreButton" aria-label="More options" title="More">⋯</button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <nav class="activitybar" aria-label="Activity bar">
+        <button class="activity-item active" data-view="explorer" title="Explorer" aria-label="Explorer">▤</button>
+        <button class="activity-item" data-view="search" title="Search" aria-label="Search">⌕</button>
+        <button class="activity-item" data-view="source" title="Source control" aria-label="Source control">⑂</button>
+        <button class="activity-item" data-view="extensions" title="Extensions" aria-label="Extensions">▦</button>
+        <div class="activity-spacer"></div>
+        <button class="activity-item" id="settingsButton" title="Settings" aria-label="Settings">⚙</button>
+      </nav>
+
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-heading"><span>EXPLORER</span><button class="subtle-icon" id="collapseSidebar" title="Tutup explorer">×</button></div>
+        <div class="workspace-label"><span class="chevron">⌄</span><span>MY-PROJECT</span><button class="subtle-icon push-right" id="newFileButton" title="File baru">＋</button></div>
+        <div class="file-tree" id="fileTree">
+          <button class="file-row selected" data-file="index.html"><span class="file-icon html">◇</span><span>index.html</span></button>
+          <button class="file-row" data-file="style.css"><span class="file-icon css">▣</span><span>style.css</span></button>
+          <button class="file-row" data-file="script.js"><span class="file-icon js">JS</span><span>script.js</span></button>
+          <div class="tree-divider"></div>
+          <div class="tree-folder"><span>▸</span><span class="folder-icon">▰</span><span>assets</span></div>
+          <div class="tree-hint">No other files in this workspace</div>
+        </div>
+        <div class="sidebar-bottom"><span class="avatar">D</span><div><strong>Developer</strong><small>Local workspace</small></div><button class="subtle-icon push-right" title="Account">⋯</button></div>
+      </aside>
+
+      <section class="editor-area">
+        <div class="tabs-bar" id="tabsBar">
+          <button class="editor-tab active" data-file="index.html"><span class="file-icon html">◇</span>index.html<span class="tab-close">×</span></button>
+          <button class="editor-tab" data-file="style.css"><span class="file-icon css">▣</span>style.css<span class="tab-close">×</span></button>
+          <button class="editor-tab" data-file="script.js"><span class="file-icon js">JS</span>script.js<span class="tab-close">×</span></button>
+          <div class="tabs-spacer"></div><button class="subtle-icon tab-action" title="Split editor">▥</button>
+        </div>
+        <div class="breadcrumbs"><span>my-project</span><span>›</span><span id="breadcrumbFile">index.html</span><span>›</span><span class="muted">Editor</span></div>
+        <div class="editor-wrap">
+          <div class="line-numbers" id="lineNumbers" aria-hidden="true"></div>
+          <div class="code-viewport" id="codeViewport">
+            <pre class="highlight-layer" id="highlightLayer" aria-hidden="true"></pre>
+            <textarea id="codeInput" class="code-input" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" aria-label="Code editor"></textarea>
+          </div>
+        </div>
+        <div class="editor-footer"><span id="editorMessage">Ready · Local editing</span><span class="footer-right"><span>UTF-8</span><span>LF</span><span id="languageLabel">HTML</span></span></div>
+      </section>
+    </main>
+
+    <section class="bottom-panel" id="bottomPanel">
+      <div class="panel-tabs"><button class="panel-tab active" data-panel="terminal">TERMINAL</button><button class="panel-tab" data-panel="output">OUTPUT</button><button class="panel-tab" data-panel="problems">PROBLEMS <span class="count">0</span></button><button class="panel-collapse" id="panelToggle" title="Tutup panel">⌄</button></div>
+      <div class="panel-content" id="panelContent"><div class="terminal-line"><span class="terminal-prompt">➜</span><span class="terminal-path">my-project</span><span class="terminal-symbol">$</span><span class="terminal-text">_</span></div><div class="terminal-note">Terminal preview — connect a runtime to execute code.</div></div>
+    </section>
+
+    <footer class="statusbar"><div class="status-left"><span class="status-branch">⑂ main</span><span>◉ 0</span><span>⚠ 0</span></div><div class="status-right"><span id="cursorPosition">Ln 1, Col 1</span><span id="statusLanguage">HTML</span><span>Spaces: 2</span><span>● Ready</span></div></footer>
+  </div>
+
+  <div class="mobile-scrim" id="mobileScrim"></div>
+  <div class="toast" id="toast" role="status"></div>
+  <div class="modal-backdrop" id="modalBackdrop" hidden>
+    <div class="command-modal" role="dialog" aria-modal="true" aria-label="Command palette">
+      <input id="commandInput" type="text" placeholder="Type a command or search…" autocomplete="off" />
+      <div class="command-options"><button data-command="explorer">Open Explorer <kbd>Ctrl+Shift+E</kbd></button><button data-command="terminal">Toggle Terminal <kbd>Ctrl+`</kbd></button><button data-command="run">Run current file <kbd>Ctrl+Enter</kbd></button></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
