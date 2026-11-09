@@ -36,7 +36,7 @@
 
       <aside class="sidebar" id="sidebar">
         <div class="sidebar-heading"><span>EXPLORER</span><button class="subtle-icon" id="collapseSidebar" title="Tutup explorer">×</button></div>
-        <div class="workspace-label"><span class="chevron">⌄</span><span>MY-PROJECT</span><button class="subtle-icon push-right" id="newFileButton" title="File baru">＋</button></div>
+        <div class="workspace-label"><span class="chevron">⌄</span><span>MY-PROJECT</span><div class="file-actions"><button class="subtle-icon" id="openFileButton" title="Buka file">↥</button><button class="subtle-icon" id="deleteFileButton" title="Hapus file">⌫</button><button class="subtle-icon" id="newFileButton" title="File baru">＋</button></div></div><input id="filePicker" type="file" multiple hidden />
         <div class="file-tree" id="fileTree">
           <button class="file-row selected" data-file="index.html"><span class="file-icon html">◇</span><span>index.html</span></button>
           <button class="file-row" data-file="style.css"><span class="file-icon css">▣</span><span>style.css</span></button>
@@ -69,13 +69,13 @@
 
     <section class="bottom-panel" id="bottomPanel">
       <div class="panel-tabs"><button class="panel-tab active" data-panel="terminal">TERMINAL</button><button class="panel-tab" data-panel="output">OUTPUT</button><button class="panel-tab" data-panel="problems">PROBLEMS <span class="count">0</span></button><button class="panel-collapse" id="panelToggle" title="Tutup panel">⌄</button></div>
-      <div class="panel-content" id="panelContent"><div class="terminal-line"><span class="terminal-prompt">➜</span><span class="terminal-path">my-project</span><span class="terminal-symbol">$</span><span class="terminal-text">_</span></div><div class="terminal-note">Terminal preview — connect a runtime to execute code.</div></div>
+      <div class="panel-content" id="panelContent"><div>Console siap. Tekan Run untuk menjalankan file.</div><div class="terminal-note">HTML memakai preview. JavaScript, Python, dan Lua memakai console runtime.</div></div>
     </section>
 
     <footer class="statusbar"><div class="status-left"><span class="status-branch">⑂ main</span><span>◉ 0</span><span>⚠ 0</span></div><div class="status-right"><span id="cursorPosition">Ln 1, Col 1</span><span id="statusLanguage">HTML</span><span>Spaces: 2</span><span>● Ready</span></div></footer>
   </div>
 
-  <div class="mobile-scrim" id="mobileScrim"></div>
+  <div class="rotate-notice"><div class="rotate-card"><b>↻</b><strong>Putar perangkat</strong><span>vsSCRIPT dirancang untuk mode horizontal (landscape).</span></div></div><div class="mobile-scrim" id="mobileScrim"></div>
   <div class="toast" id="toast" role="status"></div>
   <div class="modal-backdrop" id="modalBackdrop" hidden>
     <div class="command-modal" role="dialog" aria-modal="true" aria-label="Command palette">
